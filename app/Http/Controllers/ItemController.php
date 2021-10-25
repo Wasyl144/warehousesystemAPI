@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class ProfileController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +13,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-
-        return User::all();
+        //
     }
 
     /**
@@ -37,7 +35,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        return User::find($id);
+        //
     }
 
     /**

@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request) {
+        if (!auth()->user()->can('auth.register')){
+            return response()->json([
+                'msg' => "You haven't permission to perform action."
+            ], 403);
+        }
         User::create([
             'name' => $request->name,
             'email' => $request->email,
