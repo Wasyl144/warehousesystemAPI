@@ -21,6 +21,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
     ];
@@ -43,4 +44,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $with = [
+        'moreInfo'
+    ];
+
+    public function moreInfo() {
+        return $this->hasOne(AdditionalInfo::class, 'user_id', 'id');
+    }
 }

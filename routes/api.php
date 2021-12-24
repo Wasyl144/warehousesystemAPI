@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +19,25 @@ use App\Http\Controllers\ProfileController;
 |
 */
 
-Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');;
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user',function (Request $request) {
-        return $request->user();
+    Route::get('/self',function (Request $request) {
+        return auth()->user();
     });
 
-    Route::get('/user/{id}', [ProfileController::class, 'show']);
-    Route::get('/users', [ProfileController::class, 'index']);
+    Route::get('/permissions/self', [PermissionController::class, 'self'])->name('permission.self');
 
-    Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::resource('/user', UserController::class )->except(['index']);
+    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
+
+    Route::resource('/role', RoleController::class);
+    Route::get('/role/{id}/permissions', [PermissionController::class, 'edit'])->name('permission.edit');
+    Route::put('/role/{id}/permissions', [PermissionController::class, 'update'])->name('permission.update');
+
 });

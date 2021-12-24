@@ -13,7 +13,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return auth()->user()->can('auth.register');
     }
 
     /**
@@ -25,6 +25,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'name' => ['nullable', 'max:100'],
+            'surname' => ['nullable', 'max:100'],
             'email' => ['required', 'unique:users', 'min:5', 'max:128', 'email'],
             'password' => ['required', 'confirmed', 'min:4', 'max:50']
         ];

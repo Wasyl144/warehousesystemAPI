@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequests\LoginRequest;
 use App\Http\Requests\AuthRequests\RegisterRequest;
+use App\Models\AdditionalInfo;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,16 +13,21 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     public function register(RegisterRequest $request) {
-        if (!auth()->user()->can('auth.register')){
-            return response()->json([
-                'msg' => "You haven't permission to perform action."
-            ], 403);
-        }
-        User::create([
+
+        $user = User::create([
             'name' => $request->name,
+            'surname' => $request->surname,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
+        $user->moreInfo()->updateOrCreate([
+            'user_id' => $user->id
+        ], [
+           'user_id' => $user->id
+        ]);
+
+
         return response()->json([
             'msg' => "User has been created."
         ], 201);
