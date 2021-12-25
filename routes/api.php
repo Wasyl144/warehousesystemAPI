@@ -4,9 +4,8 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\PermissionController;
-use App\Http\Controllers\RoleController;
+use App\Http\Controllers\Permissions\PermissionController;
+use App\Http\Controllers\Permissions\RoleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,8 +35,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
 
-    Route::resource('/role', RoleController::class);
+    Route::apiResource('/role', RoleController::class);
+    Route::apiResource('/items', \App\Http\Controllers\ItemController::class);
+    Route::apiResource('/categories', \App\Http\Controllers\CategoryController::class);
     Route::get('/role/{id}/permissions', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::put('/role/{id}/permissions', [PermissionController::class, 'update'])->name('permission.update');
+    Route::get('/generate/qr', [\App\Http\Controllers\QRController::class, 'generateQr']);
 
 });

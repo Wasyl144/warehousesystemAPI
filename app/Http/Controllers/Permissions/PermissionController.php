@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Permissions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\PermissionsRequests\EditRequest;
 use App\Http\Requests\RoleRequests\UpdateRequest;
 use Illuminate\Http\Request;
@@ -47,7 +48,7 @@ class PermissionController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateRequest $request, $id)
     {

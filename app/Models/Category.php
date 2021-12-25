@@ -6,12 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Item extends Model
+class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-      'name', 'id_category', 'location', 'quantity', 'description'
+        'node_id', 'name'
     ];
-
 }

@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\ItemsRequests\DestroyRequest;
+use App\Http\Requests\ItemsRequests\IndexRequest;
+use App\Http\Requests\ItemsRequests\ShowRequest;
+use App\Http\Requests\ItemsRequests\StoreRequest;
+use App\Http\Requests\ItemsRequests\UpdateRequest;
+use App\Listings\TableListing;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
@@ -11,9 +17,9 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexRequest $request)
     {
-        //
+        return TableListing::create(Item::class)->processAndGet($request, ['*'], ['location', 'name']);
     }
 
     /**
@@ -22,9 +28,13 @@ class ItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+        Item::create($request->all());
+
+        return response()->json([
+            'message' => 'Product has been added.'
+        ], 200);
     }
 
     /**
@@ -33,9 +43,9 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ShowRequest $request, $id)
     {
-        //
+        return Item::findOrFail($id);
     }
 
     /**
@@ -45,9 +55,14 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
-        //
+        $item = Item::findOrFail($id);
+        $item->update($request->all());
+
+        return response()->json([
+            'message' => 'Product has been updated.'
+        ], 200);
     }
 
     /**
@@ -56,8 +71,13 @@ class ItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(DestroyRequest $request, $id)
     {
-        //
+        $item = Item::find($id);
+        $item->destroy();
+
+        return response()->json([
+            'message' => 'Product has been deleted.'
+        ], 200);
     }
 }

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Permissions;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\RoleRequests\DestroyRequest;
 use App\Http\Requests\RoleRequests\IndexRequest;
 use App\Http\Requests\RoleRequests\UpdateRequest;
