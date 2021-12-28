@@ -4,9 +4,8 @@ namespace App\Http\Requests\UserRequests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +14,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('user.update');
+        return Gate::allows('user.store');
     }
 
     /**
@@ -26,13 +25,14 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['sometimes','min:4', 'max:128'],
-            'email' => ['sometimes','required', 'email', Rule::unique('users')->ignore($this->id), 'max:120'],
-            'surname' => ['sometimes','min:4', 'max:128'],
+            'name' => ['nullable', 'max:100'],
+            'surname' => ['nullable', 'max:100'],
+            'email' => ['required', 'unique:users', 'min:5', 'max:128', 'email'],
+            'password' => ['required', 'confirmed', 'min:4', 'max:50'],
             'additionalInfo.phone_number' => ['nullable', 'string', 'max:30'],
             'additionalInfo.about_me' => ['nullable', 'string', 'max:300'],
             'additionalInfo.address' => ['nullable', 'string', 'max:150'],
-            'role.*.id' => ['nullable', 'integer', 'exists:roles,id']
+            'role.id' => ['nullable', 'integer', 'exists:roles,id']
         ];
     }
 }

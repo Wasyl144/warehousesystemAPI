@@ -113,4 +113,8 @@ class RoleController extends Controller
             ], 404);
         }
     }
+
+    public function getAllRoles() {
+        return Role::all();
+    }
 }

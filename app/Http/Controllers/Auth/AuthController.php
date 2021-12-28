@@ -29,7 +29,7 @@ class AuthController extends Controller
 
 
         return response()->json([
-            'msg' => "User has been created."
+            'message' => "User has been created."
         ], 201);
 
     }

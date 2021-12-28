@@ -22,11 +22,10 @@ class PermissionController extends Controller
     }
 
 
-
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function edit(EditRequest $request, $id)
@@ -35,31 +34,30 @@ class PermissionController extends Controller
         $permissions = Permission::all();
 
         return response()->json([
-            'data' => [
-                'role' => $role,
-                'rolePermissions' => $role->permissions,
-                'allPermissions' => $permissions
-            ]
+            'role' => $role,
+            'rolePermissions' => $role->permissions,
+            'allPermissions' => $permissions
+
         ], 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update(UpdateRequest $request, $id)
     {
         $group = Role::findOrFail($id);
 
-        if($request->permissions != null){
+
+        if ($request->permissions != null) {
 //            dd($request->permissions);
-            $permissions = Permission::whereIn('name' , $request->permissions)->get();
+            $permissions = Permission::whereIn('name', $request->permissions)->get();
             $group->syncPermissions($permissions);
-        }
-        else {
+        } else {
             $group->revokePermissionTo(Permission::all());
         }
 
@@ -69,8 +67,9 @@ class PermissionController extends Controller
 
     }
 
-    public function self(Request $request) {
+    public function self(Request $request)
+    {
 
-        return response()->json(auth()->user()->getPermissionNames(), 200);
+        return response()->json(auth()->user()->getAllPermissions()->pluck('name')->toArray(), 200);
     }
 }

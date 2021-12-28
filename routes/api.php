@@ -41,5 +41,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/role/{id}/permissions', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::put('/role/{id}/permissions', [PermissionController::class, 'update'])->name('permission.update');
     Route::get('/generate/qr', [\App\Http\Controllers\QRController::class, 'generateQr']);
+    Route::get('/roles', [RoleController::class, 'getAllRoles']);
 
 });

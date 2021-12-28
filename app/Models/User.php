@@ -46,7 +46,7 @@ class User extends Authenticatable
     ];
 
     protected $with = [
-        'moreInfo'
+        'moreInfo', 'roles'
     ];
 
     public function moreInfo() {
