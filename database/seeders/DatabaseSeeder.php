@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
            'name' => 'Admin',
            'surname' => 'Adminowsky',
             'email' => 'admin@admin.com',
-            'password' => 'admin',
+            'password' => bcrypt('admin'),
         ]);
         $this->call([
            PermissionsSeeder::class,
