@@ -41,6 +41,8 @@ class WarehouseInstaller extends Command
      */
     public function handle()
     {
+        $this->warn('Generating key');
+        Artisan::call('key:generate');
         $this->warn('Calling migrate...');
         Artisan::call('migrate');
         $this->warn('Seeding db...');
