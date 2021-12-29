@@ -30,7 +30,9 @@ class ItemController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        Item::create($request->all());
+        $validated = $request->validated();
+        $validated['id_category'] = $validated['category']['id'];
+        Item::create($validated);
 
         return response()->json([
             'message' => 'Product has been added.'
@@ -58,7 +60,9 @@ class ItemController extends Controller
     public function update(UpdateRequest $request, $id)
     {
         $item = Item::findOrFail($id);
-        $item->update($request->all());
+        $validated = $request->validated();
+        $validated['id_category'] = $validated['category']['id'];
+        $item->update($validated);
 
         return response()->json([
             'message' => 'Product has been updated.'

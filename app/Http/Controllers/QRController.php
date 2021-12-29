@@ -24,9 +24,14 @@ class QRController extends Controller
             }
 
             if (!File::exists($path . "qrcodeitem-$item->id.svg")) {
-                QrCode::size(200)->encoding('UTF-8')->format('svg')->generate(response()->json([
+                QrCode::size(200)->encoding('UTF-8')->format('svg')->generate(json_encode([
                     'itemId' => $item->id
                 ]), $path . "qrcodeitem-$item->id.svg");
+            }
+
+            if (isset($request->forceDownload) && $request->forceDownload > 0) {
+                $file = $path . "qrcodeitem-$item->id.svg";
+                return response()->download($file, "qrcodeitem-$item->id.svg");
             }
 
             return File::get($path . "qrcodeitem-$item->id.svg");

@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:256'],
-            'id_category' => ['sometimes', 'integer', 'exists:categories,id'],
+            'category.id' => ['sometimes', 'integer', 'exists:categories,id'],
             'location' => ['sometimes', 'string', 'max:120'],
             'quantity' => ['sometimes', 'integer'],
             'description' => ['nullable', 'string', 'max:500'],
