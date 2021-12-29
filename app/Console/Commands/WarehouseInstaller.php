@@ -58,6 +58,9 @@ class WarehouseInstaller extends Command
         $user = User::find(1);
         $user->syncRoles($role);
 
+        $this->warn('Linking storage');
+        Artisan::call('storage:link');
+
         $this->info('All done');
         $this->info('email: admin@admin.com');
         $this->info('password: admin');
