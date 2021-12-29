@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>['required'],
+            'name' =>['required', 'max:120'],
             'node_id' => ['nullable', 'integer']
         ];
     }

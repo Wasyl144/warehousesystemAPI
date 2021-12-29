@@ -73,6 +73,11 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $category->delete();
-        return response()->json(['data' => $category], 200);
+        return response()->json(['message' => 'deleted'], 200);
+    }
+
+    public function getAllCategories()
+    {
+        return Category::all();
     }
 }

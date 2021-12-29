@@ -14,4 +14,10 @@ class Item extends Model
       'name', 'id_category', 'location', 'quantity', 'description'
     ];
 
+    protected $with = ['category'];
+
+    public function category() {
+        return $this->hasOne(Category::class, 'id', 'id_category');
+    }
+
 }

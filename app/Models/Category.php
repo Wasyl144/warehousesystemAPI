@@ -13,4 +13,12 @@ class Category extends Model
     protected $fillable = [
         'node_id', 'name'
     ];
+
+    public function childs() {
+        return $this->hasMany(Category::class, 'node_id');
+    }
+
+    public function parents() {
+        return $this->belongsTo(Category::class, 'node_id');
+    }
 }

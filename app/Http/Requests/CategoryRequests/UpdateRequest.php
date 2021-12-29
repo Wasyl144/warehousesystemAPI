@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' =>['required'],
+            'name' =>['sometimes', 'max:120'],
             'node_id' => ['nullable', 'integer', 'exists:categories, id']
         ];
     }

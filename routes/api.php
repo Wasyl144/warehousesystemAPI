@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::post('/register', [AuthController::class, 'register'])->name('auth.register');
+    Route::post('/profile-update', [AuthController::class, 'update'])->name('auth.update');
 
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permission.index');
 
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/categories', \App\Http\Controllers\CategoryController::class);
     Route::get('/role/{id}/permissions', [PermissionController::class, 'edit'])->name('permission.edit');
     Route::put('/role/{id}/permissions', [PermissionController::class, 'update'])->name('permission.update');
+    Route::get('/all-categories', [\App\Http\Controllers\CategoryController::class, 'getAllCategories']);
     Route::get('/generate/qr', [\App\Http\Controllers\QRController::class, 'generateQr']);
     Route::get('/roles', [RoleController::class, 'getAllRoles']);
 

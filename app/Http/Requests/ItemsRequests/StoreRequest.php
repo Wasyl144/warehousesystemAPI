@@ -26,10 +26,10 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:256'],
-            'id_category' => ['required'],
-            'location' => ['required', 'string'],
-            'quantity' => ['required', 'numeric'],
-            'description' => ['nullable', 'string'],
+            'id_category' => ['required', 'exists:categories,id'],
+            'location' => ['required', 'string', 'max:120'],
+            'quantity' => ['required', 'integer'],
+            'description' => ['nullable', 'string', 'max:500'],
         ];
     }
 }

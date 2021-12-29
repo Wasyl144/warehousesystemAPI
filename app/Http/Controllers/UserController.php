@@ -88,7 +88,15 @@ class UserController extends Controller
     {
 
         $user = User::findOrFail($id);
-        $user->update($request->all());
+        $arr = [
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'email' => $request->email,
+        ];
+        if (isset($request->password)) {
+            $arr['password'] = bcrypt($request->password);
+        }
+        $user->update($arr);
 
         if (isset($request->additionalInfo)) {
             $arr = $request->additionalInfo;
@@ -103,7 +111,6 @@ class UserController extends Controller
             $collection = $collection->pluck('name');
             $user->syncRoles($collection);
         }
-        // TODO: Implement role change
         return response("User has been updated", 200);
     }
 
