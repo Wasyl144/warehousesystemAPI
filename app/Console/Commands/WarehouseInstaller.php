@@ -46,7 +46,8 @@ class WarehouseInstaller extends Command
         $this->warn('Calling migrate...');
         Artisan::call('migrate');
         $this->warn('Seeding db...');
-        Artisan::call('db:seed');
+        Artisan::call('db:seed --class=AdminSeeder ');
+        Artisan::call('db:seed --class=PermissionsSeeder ');
         $this->warn('Clearing permission cache');
         Artisan::call('permission:cache-reset');
         $this->warn('Installing telescope');
