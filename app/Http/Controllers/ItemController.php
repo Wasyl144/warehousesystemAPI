@@ -77,8 +77,8 @@ class ItemController extends Controller
      */
     public function destroy(DestroyRequest $request, $id)
     {
-        $item = Item::find($id);
-        $item->destroy();
+        $item = Item::findOrFail($id);
+        $item->delete();
 
         return response()->json([
             'message' => 'Product has been deleted.'
